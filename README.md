@@ -1,7 +1,7 @@
 # Spring-2022
 Master's capstone project: Determining a hedge fund's strategy and performance based on given transactional data. 
 
-What you are given:  
+Datasets given:  
 1. Stocks file   
 •PERMNO = security identifier used by CRSP  
 •RET2 = Daily gain of fund’s position in the security  
