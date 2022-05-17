@@ -4,7 +4,7 @@ Master's capstone project: Determining a hedge fund's strategy and performance b
 Project Description 
 
 What you are given: 
-1. Stocks file
+1. Stocks file 
 •PERMNO = security identifier used by CRSP  
 •RET2 = Daily gain of fund’s position in the security  
 •SIC code from CRSP  
