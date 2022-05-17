@@ -37,7 +37,6 @@ Get acquainted:
 value of “prc”).  
 
 Perspective:  
-•The analysis has several layers. Do not underestimate the workload.  
 1. Learn the portfolio composition.  
 2. Assess the fund’s performance. [If poor, then end.]  
 3. If performance is good, determine whether the fund’s performance is replicable. [If
