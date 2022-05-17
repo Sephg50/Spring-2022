@@ -10,38 +10,38 @@ What you are given:
 outstanding)  
 •Net shares = position in the security  
 
-2. Portfolio file
-•RET2 = daily gain of fund’s positions assuming 100% collateral posted for short positions
-•RET3 = daily gain of fund’s positions assuming 0% collateral posted for short positions
-•RET2-long = daily gone of long side only (rebalanced)
-•RET2-short = daily gone of short side only (rebalanced)
+2. Portfolio file  
+•RET2 = daily gain of fund’s positions assuming 100% collateral posted for short positions  
+•RET3 = daily gain of fund’s positions assuming 0% collateral posted for short positions  
+•RET2-long = daily gone of long side only (rebalanced)  
+•RET2-short = daily gone of short side only (rebalanced)  
 •VALUE-Close = sum of absolute values of security positions at the end of the day (as
-in RET2)
-•VALUE-Long = sum of values of long positions at the end of the day.
-VALUE-Short = sum of values of short positions at the end of the day.
-The net of these long and short values can be used as a base for RET3 weights.
+in RET2)  
+•VALUE-Long = sum of values of long positions at the end of the day.  
+VALUE-Short = sum of values of short positions at the end of the day.  
+The net of these long and short values can be used as a base for RET3 weights.  
 
-Identify the securities using CRSP:
-•Use PERMNO in CRSP
-– Stocks of U.S. firms, REITs, or ETFs
-– Can access financial statements (link to Compustat)
-– Can access sell-side earnings forecasts (link to I/B/E/S)
+Identify the securities using CRSP:  
+•Use PERMNO in CRSP  
+– Stocks of U.S. firms, REITs, or ETFs  
+– Can access financial statements (link to Compustat)  
+– Can access sell-side earnings forecasts (link to I/B/E/S)  
 
-Get acquainted:
-•How many securities are held on average?
-•Examine distribution of SIC codes.
-•How much time are positions typically held?
-•How many funds are held versus specific stocks? (ETFs have SIC=6276)
-•How well does the fund perform (against benchmarks)?
+Get acquainted:  
+•How many securities are held on average?  
+•Examine distribution of SIC codes.  
+•How much time are positions typically held?  
+•How many funds are held versus specific stocks? (ETFs have SIC=6276)  
+•How well does the fund perform (against benchmarks)?  
 •Next: Calculate daily weights for each security (Collect price data from CRSP. Use absolute
-value of “prc”).
+value of “prc”).  
 
-Perspective:
-•The analysis has several layers. Do not underestimate the workload.
-1. Learn the portfolio composition.
-2. Assess the fund’s performance. [If poor, then end.]
+Perspective:  
+•The analysis has several layers. Do not underestimate the workload.  
+1. Learn the portfolio composition.  
+2. Assess the fund’s performance. [If poor, then end.]  
 3. If performance is good, determine whether the fund’s performance is replicable. [If
-replicable, then end.]
+replicable, then end.]  
 4. If not replicable, characterize how the fund generates alpha. What does the fund do
-well? Do you believe the fund displays investing skill (not luck)?
-5. Do you see any areas where the fund can improve?
+well? Do you believe the fund displays investing skill (not luck)?  
+5. Do you see any areas where the fund can improve?  
