@@ -1,16 +1,16 @@
 # Spring-2022
-Master's capstone project: Determining a hedge fund's strategy and performance based on given transactional data.
+Master's capstone project: Determining a hedge fund's strategy and performance based on given transactional data. 
 
-Project Description
+Project Description 
 
-What you are given:
+What you are given: 
 1. Stocks file
-PERMNO = security identifier used by CRSP
-RET2 = Daily gain of fund’s position in the security
-SIC code from CRSP
-MCAP = market value of security at end of day (in thousands, price times shares
-outstanding)
-Net shares = position in the security
+•PERMNO = security identifier used by CRSP  
+•RET2 = Daily gain of fund’s position in the security  
+•SIC code from CRSP  
+•MCAP = market value of security at end of day (in thousands, price times shares
+outstanding)  
+•Net shares = position in the security  
 
 2. Portfolio file
 •RET2 = daily gain of fund’s positions assuming 100% collateral posted for short positions
