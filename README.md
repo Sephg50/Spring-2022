@@ -21,7 +21,7 @@ in RET2)
 VALUE-Short = sum of values of short positions at the end of the day.  
 The net of these long and short values can be used as a base for RET3 weights.  
 
-Identify the securities using CRSP:  
+Identify the securities using CRSP:    
 •Use PERMNO in CRSP  
 – Stocks of U.S. firms, REITs, or ETFs  
 – Can access financial statements (link to Compustat)  
