@@ -131,7 +131,10 @@ positions_df['position_value'] = positions_df['prc'] * positions_df['net_shares'
 ### Analysis of how many positions are held on average
 
 dailynumberpositions_df = positions_df['PERMNO'].resample('D').nunique().to_frame() # <-- number of unique PERMNOs each day
+dailynumberpositions_df = dailynumberpositions_df.replace(0,np.nan).ffill()
 dailynumberpositions_df.to_csv('FIN610-DailyNumberOfPositions.csv')
+dailynumberpositions_df.plot(figsize = (18,6)).set_title('Daily number of unique positions from May 2010 to January 2014')
+plt.savefig('FIN610-Daily number of unique positions from May 2010 to January 2014.png')
 print(f'Average daily number of unique PERMNOs = {dailynumberpositions_df["PERMNO"].mean()}')
 
 ### Analysis of portfolio weights
@@ -151,26 +154,19 @@ weights_PERMNO_df.to_csv('FIN610-weightsPERMNO.csv')
 
 
 rets_ID_df = positions_df.pivot_table(index = 'DATE', columns = 'ID', values = 'ret2')
-weightedrets_ID_df = rets_ID_df * weights_ID_df
+weightedrets_ID_df = rets_ID_df * weights_ID_df.shift(1) # today's returns with yesterday's weights
 weightedrets_ID_df.to_csv('FIN610-weightedrets_ID.csv')
+
 
 weighted_cumrets_ID_df = pd.DataFrame().reindex_like(weightedrets_ID_df)
 weighted_cumrets_ID_df = (1 + weightedrets_ID_df).cumprod() - 1
 weighted_cumrets_ID_df.to_csv('FIN610-weightedcumrets_ID.csv')
-# weighted_cumrets_ID_df.plot(figsize = (18,6)).set_title(
-#                    'CumRets by Position')
-# plt.savefig('FIN610-Plot of Individual Position CumRets')
-
-
-# test2 = weighted_cumrets_ID_df.pivot_table(index = 'DATE', values = weighted_cumrets_ID_df.columns)
-
-# test = weighted_cumrets_ID_df.apply(pd.Series.first_valid_index)
 
 finalcumrets_ID_df = weighted_cumrets_ID_df.ffill(axis=0).iloc[-1,:]
 finalcumrets_ID_df.to_csv('FIN610-FinalCumRets_ID.csv')
 
 rets_PERMNO_df = positions_df.pivot_table(index = 'DATE', columns = 'PERMNO', values = 'ret2')
-weightedrets_PERMNO_df = rets_PERMNO_df * weights_PERMNO_df 
+weightedrets_PERMNO_df = rets_PERMNO_df * weights_PERMNO_df.shift(1)
 
 pivot_weightedrets_PERMNO_df = weightedrets_PERMNO_df.reset_index(
     ).melt(id_vars = ['DATE'], value_vars = weightedrets_PERMNO_df.columns, value_name = 'wRet2').set_index('DATE')
@@ -650,14 +646,14 @@ weights_stocksVSetfs_df.to_csv('FIN610-weightsStocksVsETFs.csv')
 Average position size 3% np.nanmean(weights_ID_df)
 Median position size 3.26% np.nanmedian(weights_ID_df)
 """
-
-avgweight_ID_df = weights_ID_df.mean(axis=1).to_frame()
+avgweight_ID_df = pd.DataFrame(index=weights_ID_df.index)
+avgweight_ID_df['mean'] = weights_ID_df.mean(axis=1).to_frame()
+avgweight_ID_df['median'] = weights_ID_df.median(axis=1).to_frame()
 avgweight_ID_df.to_csv('FIN610-avg weight by ID.csv')
-# avgweight_ID_df.plot(figsize = (18,6)).set_title('Average Weight of Position by ID')
+avgweight_ID_df.plot(figsize = (18,6)).set_title('Mean and Median Weights of Individual Positions from 2010 to 2014')
+plt.savefig('FIN610-Mean and Median Weights of Individual Positions from 2010 to 2014')
 
-medweight_ID_df = weights_ID_df.median(axis=1).to_frame()
-medweight_ID_df.to_csv('FIN610-median weight by ID.csv')
-# medweight_ID_df.plot(figsize = (18,6)).set_title('Median Weight of Position by ID')
+
 
 
 """
@@ -697,8 +693,12 @@ position_duration_df.to_csv('FIN610-Duration of Positions.csv')
 position_duration_df.plot.bar(figsize = (18,6), legend=None
     ).set_title('Position Duration in Days from May 2010 to January 2014').axes.get_xaxis().set_visible(False)
 
-position_duration_df.plot.hist(figsize = (18,6), legend=None
+position_duration_df.plot.hist(figsize = (18,6), legend=None, align = 'mid', 
+                               bins = [0,50,100,150,200,250,300,350,400,450,500,550,600,
+                                       650,700,750,800,850,900,1000]
     ).set_title('Distribution of Position Duration in Days from May 2010 to January 2014')
+plt.xticks(np.arange(0, 1000, 50))
+plt.savefig('FIN610-Histogram of Position Durations')
 
 print(f'Average duration of position = {np.mean(ID_xs)} days')
 print(f'Median duration of position = {np.median(ID_xs)} days')
@@ -729,6 +729,8 @@ portfolio_df = pd.read_csv('Portfolio_2021.csv',
                                                 'number_long',
                                                 'lev_multiple'],1)
                                                 
+portfolio_df = portfolio_df.loc['2010-05-03':] # <-- Begin data at May 5, 2010 per project guidelines
+                                                
 portfolio_df['CumRet2 Check'] = (1 + weightedrets_ID_df.sum(axis=1)).cumprod() - 1
 portfolio_df['CumRet2'] = (1 + portfolio_df['ret2']).cumprod() - 1
 portfolio_df['CumRet3'] = (1 + portfolio_df['ret3']).cumprod() - 1
@@ -748,7 +750,5 @@ value_close_short = sum of values of short positions at the end of the day
 
 *the net of these long and short values can be used as a base for ret3 weights
 """
-
-portfolio_df = portfolio_df.loc['2010-05-03':] # <-- Begin data at May 5, 2010 per project guidelines
 
 print(" --- %s seconds ---" % (time.time() - start_time))
